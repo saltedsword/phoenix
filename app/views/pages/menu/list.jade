@@ -1,0 +1,33 @@
+extends ../../layout
+
+block content
+  .container
+    .row
+      table.table.table-hover.table-bordered
+        thead
+          tr
+            th 菜单名称
+            th 菜单路径
+            th 父级菜单
+            th 排序
+            th 录入时间
+            th 更新时间
+            //- th 查看
+            th 更新
+            th 删除
+        tbody
+           each item in menus
+            tr(id="item-id-#{item._id}")
+              td #{item.name}
+              td #{item.url}
+              td #{item.parent!=null?item.parent.name:'已是顶级菜单'}
+              td #{item.order}
+              td #{moment(item.meta.createAt).format('MM/DD/YYYY')}
+              td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
+              //- td: a(target="_blank", href="/admin/menu/#{item._id}") 查看
+              td: a(target="_blank", href="/admin/menu/update/#{item._id}") 修改
+              td 
+                button.btn.btn-danger.del(type="button", data-id="#{item._id}") 删除
+  script(src="/js/menu.js")
+
+

@@ -1,0 +1,35 @@
+extends ../../layout
+
+block content
+  .container
+    .row
+      form.form-horizontal(method="post", action="/admin/menu/save")
+        input(type="hidden", name="menu[_id]", value="#{menu._id}")
+        .form-group
+          label.col-sm-5.control-label(for="inputName") 菜单名称
+          .col-sm-5
+            input#inputName.form-control(type="text", name="menu[name]", value="#{menu.name}")
+        .form-group
+          label.col-sm-5.control-label(for="inputUrl") 菜单路径
+          .col-sm-5
+            input#inputUrl.form-control(type="text", name="menu[url]", value="#{menu.url}")
+        .form-group
+          label.col-sm-5.control-label(for="inputParentid") 上级菜单
+          .col-sm-5
+            input#inputParentShow.form-control(type="text", value=menu.parent!=null?menu.parent.name:'', placeholder="请选择", data-tree=tree, readonly="readonly")
+            input#inputParentid(type="hidden", value=menu.parent!=null?menu.parent_id:'', name="menu[parent]")
+            #treeview
+        .form-group
+          label.col-sm-5.control-label(for="inputOrder") 排序
+          .col-sm-5
+            input#inputOrder.form-control(type="text", name="menu[order]", value="#{menu.order}")
+        .form-group
+          label.col-sm-5.control-label 操作
+          each item in menuOptions		
+            label.checkbox-inline
+              input(type="checkbox", name="menu[options]", value="#{item.value}", checked= (menu.options.indexOf(item.value) > -1))
+              | #{item.show}
+        .form-group
+          .col-sm-offset-5.col-sm-5
+          button.btn.btn-default(type="submit") 录入
+  script(src="/js/menu.js")                   	             	       	    
